@@ -1,0 +1,500 @@
+    <!DOCTYPE html>
+    <html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Perfil de {{ username }}</title>
+        <style>
+
+            /* Estilo global */
+            body {
+                margin: 0;
+                font-family: Arial, sans-serif;
+                color: #fff;
+                display: flex;
+            }
+    /* Sidebar izquierda */
+    .sidebar {
+        width: 17%;
+        min-width: 250px;
+        background-color: #121212;
+        padding: 20px;
+        height: 100vh;
+    }
+
+    .sidebar h1 {
+        font-family: 'Brush Script MT', cursive;
+        font-size: 30px;
+        color: #fff;
+    }
+
+    .sidebar ul {
+        list-style: none;
+        padding: 0;
+        margin-top: 20px;
+    }
+
+    .sidebar ul li {
+        display: flex;
+        align-items: center;
+        margin-bottom: 15px;
+        cursor: pointer;
+    }
+
+    .sidebar ul li img {
+        width: 24px;
+        margin-right: 15px;
+    }
+
+    /* Hacer que el enlace se vea igual que el li original */
+    .sidebar ul li a {
+        text-decoration: none;
+        color: inherit;  /* Mantiene el color de texto del li */
+        display: flex;
+        align-items: center;
+        width: 100%;
+    }
+
+    .sidebar ul li:hover {
+        color: #1e90ff;
+    }
+
+    .sidebar ul li a:hover {
+        color: #1e90ff;  /* Añadir el mismo color de hover que antes */
+    }
+
+    /* Contenedor del perfil */
+    .profile-container {
+        width: 100%;
+        max-width: 900px;
+        margin-left: 70px; /* Deja espacio para la barra lateral */
+        padding: 20px;
+        background-color: white;
+        border-radius: 15px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    }
+
+            /* Cabecera del perfil */
+            .profile-header {
+                display: flex;
+                align-items: center;
+                border-bottom: 1px solid #ddd;
+                padding-bottom: 20px;
+                margin-bottom: 20px;
+            }
+
+            .profile-photo {
+                width: 120px;
+                height: 120px;
+                border-radius: 50%;
+                overflow: hidden;
+                margin-right: 20px;
+                box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            }
+
+            .profile-photo img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+
+            .profile-info {
+                flex-grow: 1;
+            }
+
+            .profile-info h1 {
+                margin: 0;
+                font-size: 28px;
+                color: #333;
+            }
+
+            .profile-info p {
+                margin: 5px 0;
+                font-size: 14px;
+                color: #666;
+            }
+
+            .profile-info button {
+                background-color: #3897f0;
+                color: white;
+                padding: 8px 15px;
+                border: none;
+                border-radius: 5px;
+                font-size: 14px;
+                cursor: pointer;
+                margin-top: 10px;
+            }
+
+            .profile-info button:hover {
+                background-color: #2d82d7;
+            }
+
+            /* Estadísticas del perfil */
+            .profile-stats {
+                display: flex;
+                justify-content: space-around;
+                margin-top: 10px;
+            }
+
+            .profile-stats div {
+                text-align: center;
+            }
+
+            .profile-stats div h2 {
+                margin: 0;
+                font-size: 22px;
+                color: #333;
+            }
+
+            .profile-stats div p {
+                margin: 0;
+                font-size: 14px;
+                color: #666;
+            }
+
+            /* Galería de publicaciones */
+            .gallery {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+                gap: 10px;
+            }
+
+            .gallery-item {
+                width: 100%;
+                position: relative;
+                overflow: hidden;
+                border-radius: 10px;
+                cursor: pointer;
+                box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            }
+
+            .gallery-item img {
+                width: 100%;
+                height: 150px;
+                object-fit: cover;
+                transition: transform 0.3s ease;
+            }
+
+            .gallery-item:hover img {
+                transform: scale(1.1);
+            }
+
+            .gallery-item .likes {
+                position: absolute;
+                bottom: 10px;
+                left: 10px;
+                background-color: rgba(0, 0, 0, 0.5);
+                color: white;
+                padding: 5px 10px;
+                border-radius: 5px;
+                font-size: 12px;
+            }
+
+            /* Formulario para editar perfil */
+            .edit-profile-form {
+                display: none;
+                background-color: #fff;
+                padding: 20px;
+                margin-top: 20px;
+                border-radius: 10px;
+                box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            }
+
+            .edit-profile-form input {
+                width: 100%;
+                padding: 10px;
+                margin: 10px 0;
+                border-radius: 5px;
+                border: 1px solid #ddd;
+            }
+
+            .edit-profile-form select {
+                width: 100%;
+                padding: 10px;
+                margin: 10px 0;
+                border-radius: 5px;
+                border: 1px solid #ddd;
+            }
+
+            .edit-profile-form button {
+                background-color: #3897f0;
+                color: white;
+                padding: 10px 20px;
+                border: none;
+                border-radius: 5px;
+                font-size: 14px;
+                cursor: pointer;
+            }
+
+            .edit-profile-form button:hover {
+                background-color: #2d82d7;
+            }
+
+            /* Estilo para el botón */
+            .regresar-boton {
+                background-color: #3897f0; /* Color azul similar al de Instagram */
+                color: white; /* Texto en blanco */
+                border: none; /* Sin borde */
+                padding: 10px 20px; /* Relleno */
+                font-size: 16px; /* Tamaño de la fuente */
+                border-radius: 5px; /* Bordes redondeados */
+                cursor: pointer; /* Indicador de cursor de mano */
+                transition: background-color 0.3s ease; /* Transición suave en el color */
+            }
+
+            .regresar-boton:hover {
+                background-color: #3079d4; /* Color más oscuro cuando el usuario pasa el ratón */
+            }
+            .edit-profile-form {
+        background-color: #f9f9f9;
+        border-radius: 10px;
+        padding: 20px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        max-width: 500px;
+        margin: auto;
+    }
+
+    .edit-profile-form h2 {
+        text-align: center;
+        margin-bottom: 15px;
+        color: #333;
+    }
+
+    .form-group {
+        margin-bottom: 15px;
+    }
+
+    .form-group label {
+        display: block;
+        font-weight: bold;
+        margin-bottom: 5px;
+    }
+
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+        width: 100%;
+        padding: 8px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 14px;
+    }
+
+    .form-group textarea {
+        resize: vertical;
+    }
+
+    button {
+        background-color: #007bff;
+        color: white;
+        border: none;
+        padding: 10px 15px;
+        border-radius: 5px;
+        cursor: pointer;
+        width: 100%;
+        font-size: 16px;
+    }
+
+    button:hover {
+        background-color: #0056b3;
+    }
+
+
+
+        </style>
+    </head>
+    <body>
+
+        <!-- Barra lateral izquierda -->
+        <div class="sidebar">
+            <h1>Cayetano Connect</h1>
+            <ul>
+                <li><a href="{{ url_for('feed') }}">
+        <img src="{{ url_for('static', filename='images/home.png') }}" alt="Inicio"> Inicio
+    </a></li>
+                <li><img src="{{ url_for('static', filename='images/search.png') }}">Search</li>
+                <li><img src="{{ url_for('static', filename='images/esplore1.png') }}">Explore</li>
+                <li><img src="{{ url_for('static', filename='images/reels.png') }}">Reels</li>
+                <li><img src="{{ url_for('static', filename='images/messaje.webp') }}">Mensajes</li>
+                <li><img src="{{ url_for('static', filename='images/notificacion.webp') }}">Notificación</li>
+                <li><img src="{{ url_for('static', filename='images/crear.png') }}">Crear</li>
+                </a></li>
+                <li><a href="{{ url_for('profile') }}">
+        <img src="{{ url_for('static', filename='images/perfil.png') }}" alt="Perfil"> Perfil
+    </a></li>
+                <li><img src="{{ url_for('static', filename='images/mas.png') }}">Más</li>
+        </div>
+
+        <!-- Contenedor del perfil -->
+        <div class="profile-container">
+
+            <!-- Cabecera del perfil -->
+            <div class="profile-header">
+                <div class="profile-photo">
+                    <img id="profile-photo" src="https://via.placeholder.com/150" alt="Foto de perfil">
+                </div>
+                <div class="profile-info">
+                    <h1 id="profile-name">Perfil de <span id="username">{{ username }}</span></h1>
+                    <p id="profile-location">📍 Ciudad, País | </p>
+                    <p id="profile-description">🎯 Descripción:</p>
+                    <p id="profile-hobbies">🎨 Gustos:</p>
+                    <p id="profile-birthdate">📅 Fecha de Nacimiento:</p>
+                    <p id="profile-age">🧑 Edad: años</p>
+                    <p id="profile-phone">📞 Celular:</p>
+                    <p id="profile-birthplace">🏠 Lugar de nacimiento:</p>
+                    <p id="profile-gender">🧑‍🤝‍🧑 Sexo:</p>
+                    <p id="profile-career">🎓 Carrera:</p>
+                    <p id="profile-social">🌐 Red social:</p>
+                    <p id="profile-gmail">🌐 Correo electrónico:</p>
+        <button id="edit-profile-btn">Editar perfil</button>
+
+                </div>
+            </div>
+
+            <!-- Estadísticas -->
+            <div class="profile-stats">
+                <div>
+                    <h2 id="profile-publications">1,200</h2>
+                    <p>Publicaciones</p>
+                </div>
+                <div>
+                    <h2 id="profile-followers">5,100</h2>
+                    <p>Seguidores</p>
+                </div>
+                <div>
+                    <h2 id="profile-following">250</h2>
+                    <p>Siguiendo</p>
+                </div>
+            </div>
+
+            <!-- Galería de publicaciones -->
+            <div class="gallery">
+                <div class="gallery-item">
+                    <img src="{{ url_for('static', filename='images/profile1.jpg') }}">
+                    <div class="likes">Me gusta: 1,000</div>
+                </div>
+                <div class="gallery-item">
+                    <img src="{{ url_for('static', filename='images/post2.jpg') }}">
+                        <div class="likes">Me gusta: 800</div>
+                </div>
+                <div class="gallery-item">
+                    <img src="{{ url_for('static', filename='images/profile1.jpg') }}">
+                    <div class="likes">Me gusta: 1,500</div>
+                </div>
+            </div>
+
+
+
+<!-- Formulario para editar perfil -->
+        <div class="edit-profile-form">
+            <input type="text" id="edit-username" placeholder="Nombre de usuario">
+            <input type="text" id="edit-location" placeholder="Ubicación">
+            <textarea id="edit-description" placeholder="Descripción"></textarea>
+            <input type="text" id="edit-hobbies" placeholder="Gustos">
+            <input type="date" id="edit-birthdate" placeholder="Fecha de nacimiento">
+            <input type="number" id="edit-age" placeholder="Edad">
+            <input type="tel" id="edit-phone" placeholder="Número de celular">
+            <input type="text" id="edit-birthplace" placeholder="Lugar de nacimiento">
+            <select id="edit-gender">
+                <option value="male">Masculino</option>
+                <option value="female">Femenino</option>
+                <option value="other">Otro</option>
+            </select>
+            <input type="text" id="edit-career" placeholder="Carrera">
+            <input type="url" id="edit-social" placeholder="Red social">
+            <input type="email" id="edit-gmail" placeholder="Correo electrónico">
+            <input type="file" id="edit-photo" accept="image/*">
+            <button id="save-profile-btn">Guardar cambios</button>
+        </div>
+
+
+    </div>
+
+
+<!-- Sección de perfil para mostrar los datos -->
+<div class="profile-view">
+    <h2>Perfil</h2>
+    <p><strong>Ciudad, País:</strong> <span id="profile-city-country">Lima, Perú</span></p>
+    <p><strong>Descripción:</strong> <span id="profile-description">Estudiante de Ingeniería</span></p>
+    <p><strong>Gustos:</strong> <span id="profile-hobbies">Arte, Música</span></p>
+    <p><strong>Fecha de Nacimiento:</strong> <span id="profile-birthdate">1998-12-10</span></p>
+    <p><strong>Edad:</strong> <span id="profile-age">25</span></p>
+    <p><strong>Celular:</strong> <span id="profile-phone">+51 999 999 999</span></p>
+    <p><strong>Lugar de nacimiento:</strong> <span id="profile-birthplace">Lima</span></p>
+    <p><strong>Sexo:</strong> <span id="profile-gender">Masculino</span></p>
+    <p><strong>Carrera:</strong> <span id="profile-career">Ingeniería Informática</span></p>
+    <p><strong>Red social:</strong> <span id="profile-social-media">https://www.linkedin.com/in/tu-perfil</span></p>
+    <p><strong>Correo electrónico:</strong> <span id="profile-email">tuemail@ejemplo.com</span></p>
+</div>
+
+<script>
+        // Mostrar el formulario para editar el perfil
+        document.getElementById('edit-profile-btn').addEventListener('click', function() {
+            document.querySelector('.edit-profile-form').style.display = 'block';
+            document.getElementById('edit-username').value = document.getElementById('username').innerText;
+            document.getElementById('edit-location').value = document.getElementById('profile-location').innerText;
+            document.getElementById('edit-description').value = document.getElementById('profile-description').innerText;
+            document.getElementById('edit-hobbies').value = document.getElementById('profile-hobbies').innerText;
+            document.getElementById('edit-birthdate').value = document.getElementById('profile-birthdate').innerText;
+            document.getElementById('edit-age').value = document.getElementById('profile-age').innerText;
+            document.getElementById('edit-phone').value = document.getElementById('profile-phone').innerText;
+            document.getElementById('edit-birthplace').value = document.getElementById('profile-birthplace').innerText;
+            document.getElementById('edit-gender').value = document.getElementById('profile-gender').innerText;
+            document.getElementById('edit-career').value = document.getElementById('profile-career').innerText;
+            document.getElementById('edit-social').value = document.getElementById('profile-social').innerText;
+            document.getElementById('edit-gmail').value = document.getElementById('profile-gmail').innerText;
+        });
+        function goToProfile() {
+            window.location.href = "/feed";  // Redirige a la página de perfil
+        }
+// Guardar los cambios en el perfil
+    document.getElementById('save-profile-btn').addEventListener('click', function() {
+        // Guardar los datos en el perfil
+        const username = document.getElementById('edit-username').value;
+        const location = document.getElementById('edit-location').value;
+        const description = document.getElementById('edit-description').value;
+        const hobbies = document.getElementById('edit-hobbies').value;
+        const birthdate = document.getElementById('edit-birthdate').value;
+        const age = document.getElementById('edit-age').value;
+        const phone = document.getElementById('edit-phone').value;
+        const birthplace = document.getElementById('edit-birthplace').value;
+        const gender = document.getElementById('edit-gender').value;
+        const career = document.getElementById('edit-career').value;
+        const social = document.getElementById('edit-social').value;
+        const gmail = document.getElementById('edit-gmail').value;
+                   // Actualizar el perfil en la interfaz
+        document.getElementById('profile-name').innerText = 'Perfil de ' + username;
+        document.getElementById('profile-location').innerText = location;
+        document.getElementById('profile-description').innerText = description;
+        document.getElementById('profile-hobbies').innerText = hobbies;
+        document.getElementById('profile-birthdate').innerText = birthdate;
+        document.getElementById('profile-age').innerText = age;
+        document.getElementById('profile-phone').innerText = phone;
+        document.getElementById('profile-birthplace').innerText = birthplace;
+        document.getElementById('profile-gender').innerText = gender;
+        document.getElementById('profile-career').innerText = career;
+        document.getElementById('profile-social').innerText = social;
+        document.getElementById('profile-gmail').innerText = gmail;
+  // Ocultar el formulario de edición
+            document.querySelector('.edit-profile-form').style.display = 'none';
+        });
+                document.getElementById('edit-profile-btn').addEventListener('click', function() {
+            document.querySelector('.edit-profile-form').style.display = 'block';
+        });
+
+        document.getElementById('save-profile-btn').addEventListener('click', function() {
+            const fileInput = document.getElementById('edit-photo');
+            if (fileInput.files && fileInput.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById('profile-photo').src = e.target.result;
+                };
+                reader.readAsDataURL(fileInput.files[0]);
+            }
+            // Aquí se guardan los demás cambios y se actualizan en el perfil.
+            alert("Perfil actualizado!");
+            document.querySelector('.edit-profile-form').style.display = 'none';
+        });
+</script>
+</body>
+</html>

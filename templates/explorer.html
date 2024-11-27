@@ -1,0 +1,167 @@
+<!-- explorer.html -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Explorer - Cayetano Connect</title>
+    <link rel="stylesheet" href="../css/style.css"> <!-- Ajusta la ruta si es necesario -->
+    <style>
+        /* Estilo global */
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #000;
+            color: #fff;
+            display: flex;
+            padding-left: 250px; /* Asegura que el contenido no se sobreponga con el sidebar */
+            padding-top: 110px; /* Ajuste para espacio superior */
+        }
+
+        /* Sidebar izquierda */
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 17%;
+            min-width: 250px;
+            background-color: #121212;
+            height: 100vh;
+            padding: 20px;
+            overflow-y: auto; /* Agrega desplazamiento si el contenido es largo */
+        }
+
+        .sidebar h1 {
+            font-family: 'Brush Script MT', cursive;
+            font-size: 30px;
+            color: #fff;
+        }
+
+        .sidebar ul {
+            list-style: none;
+            padding: 0;
+            margin-top: 20px;
+        }
+
+        .sidebar ul li {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            cursor: pointer;
+        }
+
+        .sidebar ul li img {
+            width: 24px;
+            margin-right: 15px;
+        }
+
+        .sidebar ul li a {
+            text-decoration: none;
+            color: inherit;
+            display: flex;
+            align-items: center;
+            width: 100%;
+        }
+
+        .sidebar ul li:hover {
+            color: #1e90ff;
+        }
+
+        .sidebar ul li a:hover {
+            color: #1e90ff;
+        }
+
+        /* Contenedor de exploración */
+        .explorer {
+            flex: 1;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Ajuste de tamaño */
+            gap: 15px;
+            padding: 10px;
+        }
+
+        .explorer-item {
+            background-color: #333;
+            border-radius: 10px;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+            height: 250px; /* Ajuste de altura */
+            overflow: hidden; /* Evita que los elementos sobresalgan */
+        }
+
+        .explorer-item img, .explorer-item video {
+            width: 100%;
+            height: auto;
+            max-width: 100%;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Sidebar izquierda -->
+    <div class="sidebar">
+        <h1>Cayetano Connect</h1>
+        <ul>
+            <li><a href="{{ url_for('feed') }}">
+                <img src="{{ url_for('static', filename='images/home.png') }}" alt="Inicio"> Inicio
+            </a></li>
+            <li>
+                <a href="javascript:void(0);" onclick="toggleSearchForm()">
+                    <img src="{{ url_for('static', filename='images/search.png') }}" alt="Buscar"> Buscar
+                </a>
+            </li>
+            <li><a href="{{ url_for('explorer') }}">
+                <img src="{{ url_for('static', filename='images/esplore1.png') }}" alt="Explorar"> Explorar
+             </a></li>
+            <li><a href="{{ url_for('reels') }}">
+    <img src="{{ url_for('static', filename='images/reels.png') }}" alt="Reels"> Reels
+</a></li>
+            <li><a href="{{ url_for('messages') }}">
+    <img src="{{ url_for('static', filename='images/messaje.webp') }}" alt="Mensajes"> Mensajes
+</a></li>
+            <li><img src="../static/images/notificacion.webp" alt="Notificación"> Notificación</li>
+            <li><a href="javascript:void(0);" onclick="toggleCreatePostForm()">
+                <img src="../static/images/crear.png" alt="Crear"> Crear
+            </a></li>
+            </a></li>
+            <li><a href="{{ url_for('profile') }}">
+    <img src="{{ url_for('static', filename='images/perfil.png') }}" alt="Perfil"> Perfil
+</a></li>
+            <li><img src="../static/images/mas.png" alt="Más"> Más</li>
+        </ul>
+    </div>
+
+    <!-- Contenedor de exploración -->
+    <div class="explorer">
+        <div class="explorer-item">
+            <img src="{{ url_for('static', filename='images/info.webp') }}">
+        </div>
+        <div class="explorer-item">
+            <img src="{{ url_for('static', filename='images/info2.webp') }}">
+        </div>
+        <div class="explorer-item">
+            <video controls>
+                <source src="{{ url_for('static', filename='images/info1.mp4') }}">
+                Tu navegador no soporta la reproducción de video.
+            </video>
+        </div>
+        <div class="explorer-item">
+            <img src="{{ url_for('static', filename='images/Pregunta1 BD.png') }}">
+        </div>
+        <!-- Agrega más elementos de imagen o video según sea necesario -->
+    </div>
+
+    <script>
+        function toggleSearchForm() {
+            alert('Funcionalidad de búsqueda activada.');
+        }
+
+        function toggleCreatePostForm() {
+            alert('Funcionalidad de crear publicación activada.');
+        }
+    </script>
+</body>
+</html>
